@@ -11,15 +11,18 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 
+                
                 {{-- 条件によって表示内容を分けるために if-else 文を使いたいときは @if (条件式） ... @else ... @endif の指定をしてください。条件式に指定した Auth::check() は、ユーザがログインしているかどうかを調べるための関数です。--}}
                 @if (Auth::check())
                     {{-- ユーザ一覧ページへのリンク --}}
-                    <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
+               {{-- <li class="nav-item"><a href="#" class="nav-link">Users</a></li>--}}
+                    <li class="nav-item">{!! link_to_route('users.index', 'Users', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             {{-- ユーザ詳細ページへのリンク --}}
-                            <li class="dropdown-item"><a href="#">My profile</a></li>
+                       {{-- <li class="dropdown-item"><a href="#">My profile</a></li> --}}
+                            <li class="dropdown-item">{!! link_to_route('users.show', 'My profile', ['user' => Auth::id()]) !!}</li>
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
