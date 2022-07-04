@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', 'MicropostsController@index'); //Controller ( MicropostsController@index ) を経由してwelcomeを表示する
 
 //2022.07.03..2245TKT
 // ユーザ登録
@@ -30,5 +32,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 //認証付きのルーティング。ユーザ一覧とユーザ詳細はログインしていない閲覧者には見せたくありません。そのようなときは auth ミドルウェアを使いましょう。
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+Route::resource('users', 'UsersController', ['only' => ['index', 'show']]); //
+Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]); //認証を必要とするルーティンググループ内に、 Micropostsのルーティングを設定します（登録のstoreと削除のdestroyのみ）。これで、認証済みのユーザだけがこれらのアクションにアクセスできます。
+
 });

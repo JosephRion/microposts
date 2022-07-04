@@ -36,4 +36,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * このユーザが所有する投稿。（ Micropostモデルとの関係を定義）
+     * User Model L15 C9.1
+     */
+    public function microposts()
+    {
+        return $this->hasMany(Micropost::class);
+    }
+    
+    /**
+     * このユーザに関係するモデルの件数をロードする。
+     * Micropostの数をカウントする機能を追加
+     * Userが持つMicropostの数をカウントするためのメソッドも作成しておきます。
+     * loadCount メソッドの引数に指定しているのはリレーション名です。
+     * 先ほどモデル同士の関係を表すメソッドを定義しましたが、そのメソッド名がリレーション名になります。
+     * これによりUserのインスタンスに {リレーション名}_count プロパティが追加され、件数を取得できるようになります。
+     */
+    public function loadRelationshipCounts()
+    {
+        $this->loadCount('microposts');
+    }
+    
 }
