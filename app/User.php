@@ -40,6 +40,8 @@ class User extends Authenticatable
     /**
      * このユーザが所有する投稿。（ Micropostモデルとの関係を定義）
      * User Model L15 C9.1
+     * これが無いとエラーになる。
+     * BadMethodCallException with message 'Call to undefined method App\User::microposts()'
      */
     public function microposts()
     {
