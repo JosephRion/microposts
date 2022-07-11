@@ -11,10 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', 'MicropostsController@index'); //Controller ( MicropostsController@index ) を経由してwelcomeを表示する
 
 //2022.07.03..2245TKT
@@ -32,7 +28,13 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 //認証付きのルーティング。ユーザ一覧とユーザ詳細はログインしていない閲覧者には見せたくありません。そのようなときは auth ミドルウェアを使いましょう。
 Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('follow', 'UserFollowController@store')->name('user.follow');
+        Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+        Route::get('followings', 'UsersController@followings')->name('users.followings');
+        Route::get('followers', 'UsersController@followers')->name('users.followers');
+    }); //authの Route::group の中に ['prefix' => 'users/{id}'] とした Route::group を追加しています。Lesson 15Chapter 10.2 Router
 Route::resource('users', 'UsersController', ['only' => ['index', 'show']]); //
 Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]); //認証を必要とするルーティンググループ内に、 Micropostsのルーティングを設定します（登録のstoreと削除のdestroyのみ）。これで、認証済みのユーザだけがこれらのアクションにアクセスできます。
+}); //groupの閉じ括弧２つ
 
-});
