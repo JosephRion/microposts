@@ -5,7 +5,7 @@
         <div class="row">
             <aside class="col-sm-4">
                 
-                {{--内容をあっとインクルード('users.card')で書き換え
+                {{--内容をあっとインクルード('users.card')で書き換え。（ホントはざっくり消してしまう方がスッキリするのだが。）
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ Auth::user()->name }}</h3>
