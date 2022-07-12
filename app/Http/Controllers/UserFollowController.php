@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 // use Illuminate\Http\Request; //これはコメントアウトするのか。
+//Chapter 10.3 UserFollowController@store, destroy に掲載されいているコードのことですね。
+//記述しても誤作動にはなりませんが、その use はこのクラスでは不要です。
+//理由は、このクラスでは Illuminate\Http\Request というクラスを使っていないためです。
+//mentor-sugimoto 2022.07.12..TKT09:02
 
 class UserFollowController extends Controller
 {

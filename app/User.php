@@ -68,9 +68,14 @@ class User extends Authenticatable
      * 先ほどモデル同士の関係を表すメソッドを定義しましたが、そのメソッド名がリレーション名になります。
      * これによりUserのインスタンスに {リレーション名}_count プロパティが追加され、件数を取得できるようになります。
      */
+     /**
+     * このユーザに関係するモデルの件数をロードする。
+     * フォロー／フォロワー数のカウント L15 C10.3
+     */
     public function loadRelationshipCounts()
     {
-        $this->loadCount('microposts');
+        //$this->loadCount('microposts');  //後で出てきますが、アクションでこのメソッドを $user->loadRelationshipCounts() のように呼び出し、ビューで $user->microposts_count のように件数を取得することになります。L15 C9.1
+        $this->loadCount(['microposts', 'followings', 'followers']); //L15 C10.3
     }
     
     /**
@@ -150,13 +155,6 @@ class User extends Authenticatable
     }
     
     
-    /**
-     * このユーザに関係するモデルの件数をロードする。
-     * フォロー／フォロワー数のカウント L15 C10.3
-     */
-    public function loadRelationshipCounts()
-    {
-        $this->loadCount(['microposts', 'followings', 'followers']);
-    }
+    
     
 }
