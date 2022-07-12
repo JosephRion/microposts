@@ -154,7 +154,20 @@ class User extends Authenticatable
         return $this->followings()->where('follow_id', $userId)->exists();
     }
     
-    
+    /**
+     * このユーザとフォロー中ユーザの投稿に絞り込む。
+     * Lesson 15Chapter 11.1 Userモデルに機能追加
+     * タイムライン用のマイクロポストを取得するためのメソッドを実装します。
+     */
+    public function feed_microposts()
+    {
+        // このユーザがフォロー中のユーザのidを取得して配列にする
+        $userIds = $this->followings()->pluck('users.id')->toArray();
+        // このユーザのidもその配列に追加
+        $userIds[] = $this->id;
+        // それらのユーザが所有する投稿に絞り込む
+        return Micropost::whereIn('user_id', $userIds);
+    }
     
     
 }
